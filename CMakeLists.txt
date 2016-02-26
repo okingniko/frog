@@ -6,7 +6,8 @@ set(SRC_PATH ${PROJECT_SOURCE_DIR}/src)
 include_directories(${SRC_PATH})
 message(STATUS "${SRC_PATH}")
 
-find_package(Boost 1.50.0 COMPONENTS system coroutine context filesystem
+find_package(Threads REQUIRED)
+find_package(Boost 1.50.0 COMPONENTS system thread coroutine context filesystem
   date_time REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
