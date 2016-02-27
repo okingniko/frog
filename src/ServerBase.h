@@ -152,11 +152,9 @@ class ServerBase {
     // Copy the resources to opt_resource_ for more efficient request processing.
     opt_resource_.clear();
     for (auto &res : resource) {
-      // res : std::pair<std::string, std::unordered_map<std::string,
-      //    std::function<void(<typename ServerBase<SocketType>::Respnse&,std::shared_ptr<typename ServerBase<SocketType>::Request>)>> 
+      // res : std::pair<std::string, std::unordered_map<std::string, ResouceMethod>>
       for (auto &res_method : res.second) {
-        // res_method : std::pair<std::string,
-        //   std::function<void(<typaname ServerBase<SocketType>::Response &, std::shared_ptr<typename ServerBase<SocketType>::Request>)>>    
+        // res_method : std::pair<std::string, ResourceMethod>
         auto iter = opt_resource_.end();
 
         for (auto opt_iter = opt_resource_.begin(); opt_iter != opt_resource_.end(); ++opt_iter) {
@@ -170,8 +168,7 @@ class ServerBase {
             iter = opt_resource_.begin() + (opt_resource_.size() - 1);
             iter->first = res_method.first;
           }
-          // iter->second : std::vector<std::pair<std::regex,
-          //    std::function<void(typename ServerBase<SocketType>::Response&, std::shared_ptr<typename ServerBase<SocketType>::Request>)>> 
+          // iter->second : std::vector<std::pair<std::regex, ResouceMethod>>
           iter->second.emplace_back(std::regex(res.first), res_method.second);
       }
     }
@@ -181,9 +178,9 @@ class ServerBase {
     
     boost::asio::ip::tcp::endpoint the_endpoint;
     if (config.address.size() > 0)
-      the_endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(config.address), config.port);
+      the_endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(config.address), config.port_);
     else 
-      the_endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), config.port);
+      the_endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), config.port_);
     
     the_acceptor.open(the_endpoint.protocol());
     the_acceptor.set_option(boost::asio::socket_base::reuse_address(config.reuse_address));
@@ -191,6 +188,17 @@ class ServerBase {
     the_acceptor.listen();
     
     Accept();
+    
+    //if num_threads > 1, start m_io_service.run in (num_threads - 1) for thread polling.
+    threads.clear();
+    for (size_t i = 1; i < config.num_threads_; ++i) {
+      threads.emplace_back([this]() {
+          the_io_service.run();
+      });
+    }
+
+    // Main thread
+    the_io_service.run();
 
     // Wait for the rest of the threads, if any, to finish as well.
     for (auto &t : threads) {

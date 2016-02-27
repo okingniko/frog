@@ -11,5 +11,7 @@ find_package(Boost 1.50.0 COMPONENTS system thread coroutine context filesystem
   date_time REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
+add_subdirectory(src)
+
 enable_testing()
 add_subdirectory(tests)

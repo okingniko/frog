@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <frog>
   <LogoLocate>conf/logo.txt</LogoLocate>
-  <DocumentRoot>www/</DocumentRoot>
+  <DocumentRoot>www</DocumentRoot>
   <ServerPort>8080</ServerPort>
   <ThreadsCount>4</ThreadsCount>
 </frog>
