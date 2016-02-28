@@ -6,7 +6,7 @@
 </h1>
 
 ## Intro
-A simple, Multithreaded, fast, platform independent HTTP server and client library, implemented in c++11.  Easy to add REST resources for your c++ applications.
+A simple, Multithreaded, fast, platform independent HTTP server and client library, implemented in c++11 and Boost.  Easy to add REST resources for your c++ applications.
 
 ## Features
 * Thread pool(convenience setting by MainConf.xml file)
