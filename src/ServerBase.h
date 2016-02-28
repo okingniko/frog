@@ -25,7 +25,7 @@ class ServerBase {
 
     void flush() {
       boost::system::error_code ec;
-      // Use coroutine to improve performance.
+      // Use coroutine to replace the error handler.
       boost::asio::async_write(sock_, stream_buf_, yield_[ec]);
 
       if (ec) {
@@ -132,9 +132,9 @@ class ServerBase {
   using ResourceMethod =  std::function<void(typename ServerBase<SocketType>::Response&, 
                                         std::shared_ptr<typename ServerBase<SocketType>::Request>)>;
 
-  std::unordered_map<std::string, std::unordered_map<std::string, ResourceMethod>> resource;
+  std::unordered_map<std::string /*url_path*/, std::unordered_map<std::string/*http_method*/, ResourceMethod>> resource;
   
-  std::unordered_map<std::string, ResourceMethod> default_resource;
+  std::unordered_map<std::string/*http_method*/, ResourceMethod> default_resource;
   
  protected:
   boost::asio::io_service the_io_service;
@@ -145,7 +145,8 @@ class ServerBase {
   size_t timeout_content;
 
  private:
-  std::vector<std::pair<std::string, std::vector<std::pair<std::regex, ResourceMethod>>>> opt_resource_;
+  // E.g. "GET" "path_regex" 
+  std::vector<std::pair<std::string/*http_method*/, std::vector<std::pair<std::regex/*url_path*/, ResourceMethod>>>> opt_resource_;
 
  public:
   void Start() {
@@ -346,16 +347,15 @@ class ServerBase {
   void FindResource(std::shared_ptr<SocketType> sock, std::shared_ptr<Request> request) {
     // Find path and method match, and call WriteResponse
     for (auto &res : opt_resource_) {
-      // res : std::pair<std::string, std::unordered_map<std::string,
-      //    std::function<void(<typename ServerBase<SocketType>::Respnse&,std::shared_ptr<typename ServerBase<SocketType>::Request>)>> 
+      // res : std::pair<std::string, std::unordered_map<std::string, ResourceMethod>>
       if (request->method == res.first) {
         for (auto &res_path : res.second) {
-        // res_path : std::pair<std::string,
-        //   std::function<void(<typaname ServerBase<SocketType>::Response &, std::shared_ptr<typename ServerBase<SocketType>::Request>)>>    
+        // res_path : std::pair<std::string, ResourceMethod>
           std::smatch sm_res;
           if (std::regex_match(request->path, sm_res, res_path.first)) {
             request->path_match = std::move(sm_res);
             WriteResponse(sock, request, res_path.second);
+            return;
           }
         }
       }
@@ -367,8 +367,7 @@ class ServerBase {
   }
 
   void WriteResponse(std::shared_ptr<SocketType> sock, std::shared_ptr<Request> request,
-      std::function<void(typename ServerBase<SocketType>::Response&, 
-                    std::shared_ptr<typename ServerBase<SocketType>::Request>)> &resource_function) {
+                     ResourceMethod &resource_function) {
     //Set timeout on the following boost::asio::async_read or async_write function.
     std::shared_ptr<boost::asio::deadline_timer> timer;
     if (timeout_content > 0)
@@ -403,9 +402,9 @@ class ServerBase {
         std::cerr << "exception caught: " << e.what() << '\n';
         return;
       }
-      if (http_version > 1.00)
+      if (http_version > 1.05)
         ReadRequestAndContent(sock);
-        });
+      });
   }
 
 }; // class ServerBase 

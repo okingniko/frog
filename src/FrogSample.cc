@@ -1,5 +1,4 @@
 #include "HttpServer.h"
-#include "HttpClient.h"
 #include "ConfigParser.h"
 
 // added for the json-example
@@ -16,7 +15,6 @@ namespace pt = boost::property_tree;
 namespace fs = boost::filesystem;
 
 using HttpServer = frog::Server<frog::HTTP>;
-using HttpClient = frog::Client<frog::HTTP>;
 
 static void PrintLogo(const std::string &logo_path);
 
@@ -42,13 +40,59 @@ int main(const int argc, const char *argv[])
     auto content = request->content.string();
     response << "HTTP/1.1 200 OK\r\nContent-Length: " << content.length() << "\r\n\r\n" << content;
   };
+  
+  // A POST-example for the path /json, respond with the "firstname " + "secondname" from the posted json.
+  // Respond with an appropriate error message if the posted json is invaild,
+  // or if the firstname and secondname is missing.
+  // Example posted json:
+  // {
+  //  "firstname" : "wang"
+  //  "lastname" : "mumu"
+  //  "age" : 22
+  //  "sex" : "male"
+  //  }
+    server.resource["^/json$"]["POST"] = [](HttpServer::Response &response, shared_ptr<HttpServer::Request> request) {
+      try {
+        pt::ptree pt;
+        pt::read_json(request->content, pt);
 
-  // Default GET-example. 
+        string name = pt.get<string>("firstname") + " " + pt.get<string>("lastname");
+
+        response << "HTTP/1.1 200 OK\r\nContent-Length: " << name.length() << "\r\n\r\n" << name;
+      } catch(const exception &e) {
+        response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what())
+                 << "\r\n\r\n" << e.what();
+      }
+    };
+  
+  // GET-example for the /id/<int:id>, respond the content of the id.
+  server.resource["^/id/([0-9]+)$"]["GET"] = [](HttpServer::Response &response, shared_ptr<HttpServer::Request> request) {
+    string id = request->path_match[1];
+    response << "HTTP/1.1 200 OK\r\nContent-Length: " << id.length() << "\r\n\r\n"
+             << id;
+  };
+
+  // GET-example for the path /reqinfo
+  // Responds with request information
+  server.resource["^/reqinfo$"]["GET"] = [](HttpServer::Response &response, shared_ptr<HttpServer::Request> request) {
+    stringstream content_stream;
+    content_stream << "<h2>Request from " << request->remote_endpoint_address << ":" << request->remote_endpoint_port<< "</h2>";
+    content_stream << request->method << " " << request->path << " HTTP/" << request->http_version << "<br>";
+    for (auto &header : request->headers) {
+      content_stream << header.first << ": " << header.second << "<br>";
+    }
+
+    content_stream.seekp(0, ios::end);
+    response << "HTTP/1.1 200 OK\r\nContent-Length: " << content_stream.tellp()
+             << "\r\n\r\n" << content_stream.rdbuf();
+  };
+
+  // Default GET-example.  
   server.default_resource["GET"] = [conf_parser](HttpServer::Response &response, shared_ptr<HttpServer::Request> request) {
     string document_root = conf_parser->GetDocumentRoot();
     fs::path web_root_path(document_root);
     if (!fs::exists(web_root_path)) {
-      cerr << "Counld not find web root." << endl;
+      cerr << "Could not find web root." << endl;
     } else {
       auto path = web_root_path;
       path += request->path;
@@ -92,7 +136,7 @@ int main(const int argc, const char *argv[])
     }
     string content = "Could not open path " + request->path;
     response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << content.length()
-               << "\r\n\r\n";
+               << "\r\n\r\n" << content;
   };
     
   server.Start();

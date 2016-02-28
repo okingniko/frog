@@ -60,6 +60,7 @@ class ClientBase
     return RequestRead();
   }
 
+/*
   std::shared_ptr<Response> Request(const std::string &request_type, 
                                     const std::string &path,
                                     std::iostream &content,
@@ -96,7 +97,8 @@ class ClientBase
 
     return RequestRead();
   }
-  
+*/
+
  protected:
   ClientBase(const std::string &host_port, unsigned short default_port)
     : the_resolver(the_io_service), socket_error(false)

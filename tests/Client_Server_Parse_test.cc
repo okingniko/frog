@@ -1,5 +1,5 @@
-#include "../src/HttpServer.h"
-#include "../src/HttpClient.h"
+#include "HttpServer.h"
+#include "HttpClient.h"
 
 #include <iostream>
 #include <sstream>
