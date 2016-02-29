@@ -1,12 +1,12 @@
 <h1 align="center">
 	<br>
-	<img width="200" src="https://github.com/okingniko/frog/blob/master/media/logo.jpg" alt="frog">
+	<img width="300" src="https://github.com/okingniko/frog/blob/master/media/logo.jpg" alt="frog">
 	<br>
 	<br>
 </h1>
 
 ## Intro
-A simple, Multithreaded, fast, platform independent HTTP server and client library, implemented in c++11 and Boost.  Easy to add REST resources for your c++ applications.
+A Fast, Multithreaded, Platform independent HTTP server and client library, implemented in c++11 and Boost.  Easy to add REST resources for your c++ applications.
 
 ## Features
 * Thread pool(convenience setting by MainConf.xml file)
@@ -35,7 +35,7 @@ cd build && cmake .. && make && make install
 |  Resource URL | Method | Explanation |
 | ------------- | ------ | ----------- |
 | /reqinfo      |   GET  | return the request information|
-| /id/<id:int>  |   GET  | return id value (you may use the id value as the database index)|
+| /id/\<id:int\>  |   GET  | return id value (you may use the id value as the database index)|
 | /string       |   POST | return the content of the post form |
 | /json         |   POST | Analyse fixed format json, returns the parsed contents |
 
