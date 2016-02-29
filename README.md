@@ -8,6 +8,8 @@
 ## Intro
 A Fast, Multithreaded, Platform independent HTTP server and client library, implemented in c++11 and Boost.  Easy to add REST resources for your c++ applications.
 
+**Coding Style**: [Google C++ 编程规范](http://zh-google-styleguide.readthedocs.org/en/latest/google-cpp-styleguide/contents/)
+
 ## Features
 * Thread pool(convenience setting by MainConf.xml file)
 * HTTP persistent connection(HTTP/1.1)
