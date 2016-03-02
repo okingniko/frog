@@ -9,7 +9,7 @@ class Server : public ServerBase<SocketType>
 {
 };
 
-typedef boost::asio::ip::tcp::socket HTTP;
+using HTTP = boost::asio::ip::tcp::socket;
 
 template<>
 class Server<HTTP> : public ServerBase<HTTP>

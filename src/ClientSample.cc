@@ -13,7 +13,7 @@ int main(const int argc, char *argv[])
   HttpClient test_client("localhost:8080");
 
   
-  //this_thread::sleep_for(chrono::seconds(3));
+  //this_thread::sleep_for(chrono::milliseconds(800));
 
   string json_str = "{\"firstname\": \"wang\", \"lastname\": \"mumu\", \"sex\": \"male\"}";
   auto resp2 = test_client.Request("POST", "/json", json_str);
