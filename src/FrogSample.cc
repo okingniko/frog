@@ -144,6 +144,15 @@ int main(const int argc, const char *argv[])
 }
 
 void PrintLogo(const std::string &logo_path) {
-  cout << "logo locate at " << logo_path << endl;
+  ifstream logo(logo_path);
+
+  if (logo.good() == false || logo.is_open() == false) {
+    cerr << "ERROR: cannot find logo file, Please Check!" << endl;
+    return;
+  }
+  string line;
+  while (getline(logo, line)) {
+    cout << "\e[32;1m" << line << "\e[0m" << endl;
+  }
 }
 

@@ -3,7 +3,6 @@
 #include <boost/asio.hpp>
 #include <boost/asio/spawn.hpp>
 
-#include <system_error>
 #include <unordered_map>
 #include <thread>
 #include <regex>
