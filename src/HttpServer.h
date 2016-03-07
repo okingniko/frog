@@ -33,6 +33,7 @@ class Server<HTTP> : public ServerBase<HTTP>
       Accept();
 
       if (!ec) {
+        // Formid  Nagle algorithm.
         boost::asio::ip::tcp::no_delay option(true);
         sock->set_option(option);
 
