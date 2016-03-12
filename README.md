@@ -34,8 +34,12 @@ A Fast, Multithreaded, Platform independent HTTP server and client library, impl
 cd build && cmake .. && make && make install
 ```
 * Run
-  1. Run `./frog_sample` as the server
+  1. Run `./frog_sample` as the server.
   2. Run `./client_sample` for test, or Use your favorite browser as the Client.
+
+* Pressure Test
+  1. See detail at /tests/PressureTest.sh.
+  2. Sample pressure_test locate at [here](pressure_test.txt).
 
 ##About REST 
 **frog_sample api:**
