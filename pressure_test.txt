@@ -1,0 +1,91 @@
+This is the pressure test result of frog server sample\n
+##########################################################
+Test Rate: 5(per second), seconds period: 10
+49 fetches, 1 max parallel, 7.2774e+06 bytes, in 10.0007 seconds
+148518 mean bytes/connection
+4.89963 fetches/sec, 727686 bytes/sec
+msecs/connect: 1.93267 mean, 3.529 max, 1.579 min
+msecs/first-response: 1.75927 mean, 2.892 max, 1.129 min
+HTTP response codes:
+  code 200 -- 49
+##########################################################
+##########################################################
+Test Rate: 10(per second), seconds period: 10
+99 fetches, 1 max parallel, 1.94018e+07 bytes, in 10.0023 seconds
+195978 mean bytes/connection
+9.89776 fetches/sec, 1.93975e+06 bytes/sec
+msecs/connect: 1.86221 mean, 2.853 max, 1.709 min
+msecs/first-response: 1.76806 mean, 2.825 max, 1.51 min
+HTTP response codes:
+  code 200 -- 99
+##########################################################
+##########################################################
+Test Rate: 20(per second), seconds period: 10
+199 fetches, 1 max parallel, 3.46494e+07 bytes, in 10.0005 seconds
+174117 mean bytes/connection
+19.8991 fetches/sec, 3.46478e+06 bytes/sec
+msecs/connect: 1.82828 mean, 3.191 max, 1.385 min
+msecs/first-response: 1.72739 mean, 3.4 max, 1.365 min
+HTTP response codes:
+  code 200 -- 199
+##########################################################
+##########################################################
+Test Rate: 40(per second), seconds period: 10
+399 fetches, 2 max parallel, 6.23747e+07 bytes, in 10.0012 seconds
+156328 mean bytes/connection
+39.8953 fetches/sec, 6.23674e+06 bytes/sec
+msecs/connect: 1.75521 mean, 3.977 max, 0.826 min
+msecs/first-response: 1.7076 mean, 5.842 max, 0.951 min
+HTTP response codes:
+  code 200 -- 399
+##########################################################
+##########################################################
+Test Rate: 80(per second), seconds period: 10
+833 fetches, 4 max parallel, 1.4795e+08 bytes, in 10.0002 seconds
+177611 mean bytes/connection
+83.2979 fetches/sec, 1.47947e+07 bytes/sec
+msecs/connect: 1.47485 mean, 4.014 max, 0.804 min
+msecs/first-response: 1.53925 mean, 3.666 max, 0.873 min
+HTTP response codes:
+  code 200 -- 833
+##########################################################
+##########################################################
+Test Rate: 160(per second), seconds period: 10
+1665 fetches, 5 max parallel, 2.9417e+08 bytes, in 10.0002 seconds
+176678 mean bytes/connection
+166.497 fetches/sec, 2.94164e+07 bytes/sec
+msecs/connect: 1.19106 mean, 6.682 max, 0.833 min
+msecs/first-response: 1.3372 mean, 14.773 max, 0.864 min
+HTTP response codes:
+  code 200 -- 1665
+##########################################################
+##########################################################
+Test Rate: 320(per second), seconds period: 10
+3330 fetches, 10 max parallel, 5.78645e+08 bytes, in 10.0008 seconds
+173767 mean bytes/connection
+332.972 fetches/sec, 5.78596e+07 bytes/sec
+msecs/connect: 1.43958 mean, 6.847 max, 0.802 min
+msecs/first-response: 1.60804 mean, 22.998 max, 0.865 min
+HTTP response codes:
+  code 200 -- 3330
+##########################################################
+##########################################################
+Test Rate: 640(per second), seconds period: 10
+9986 fetches, 56 max parallel, 1.70374e+09 bytes, in 10.0006 seconds
+170613 mean bytes/connection
+998.544 fetches/sec, 1.70364e+08 bytes/sec
+msecs/connect: 1.98739 mean, 17.594 max, 0.789 min
+msecs/first-response: 2.94397 mean, 33.015 max, 0.975 min
+HTTP response codes:
+  code 200 -- 9986
+##########################################################
+##########################################################
+Test Rate: 1000(per second), seconds period: 10
+9990 fetches, 116 max parallel, 1.72139e+09 bytes, in 10.0008 seconds
+172312 mean bytes/connection
+998.924 fetches/sec, 1.72126e+08 bytes/sec
+msecs/connect: 1.51161 mean, 12.431 max, 0.878 min
+msecs/first-response: 3.466 mean, 121.933 max, 1.004 min
+HTTP response codes:
+  code 200 -- 9990
+##########################################################
