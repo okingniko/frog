@@ -20,7 +20,13 @@ A Fast, Multithreaded, Platform independent HTTP server and client library, impl
 * Etc.
 
 ## Demo
-![frog demo](/media/frog_demo.gif)
+### Function Test
+![frog demo](media/frog_demo.gif)
+
+### Pressure Test
+![Pressure test](media/pressure_test_demo.gif)
+
+> Program locate : */tests/PressureTest.sh* (Using [http_load](http://acme.com/software/http_load/))
 
 ## Usage
 * Compile
